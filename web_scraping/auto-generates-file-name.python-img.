@@ -1,0 +1,47 @@
+import requests
+import os
+import json
+
+# 🔹 Load your JSON data (replace with your file path if saving in a .json file)
+data = [
+  {
+    "id": "standard-bolts",
+    "title": "STANDARD BOLTS",
+    "image": "https://lh7-rt.googleusercontent.com/formsz/AN7BsVDIfPpiQW64nMKO1mB4FzFuMZrwg1AboiL5bWmmr4o2vhk3H5nZferUk4na60GQheBF0-gHZp0TnfVmof3X4CaAUpLUn-uWfln5bhhY1k2gfgCfeP9iOTdNGBAWZ2GP68TSXcuIjWTpFQvj6bYK4GkBMw=w200?key=tvlNs4tNj24XuqonR51MNA"
+  },
+  {
+    "id": "standard-washers",
+    "title": "STANDARD WASHERS",
+    "image": "https://lh7-rt.googleusercontent.com/formsz/AN7BsVDa6S0Cbw_jwOVPT_ymyZPldnlmtCv3ho38aAw7IQZGNIGVCGmww7ko4rAGt60bI4EOitbh4RHAKDXEJ-0WyNdMGC5Az3ZfEG9GiJ-ZnLDojVtM_qm0GTF_KFncfm1zcp-xHoFDRQER-X__Pcht68P48g=w223?key=tvlNs4tNj24XuqonR51MNA"
+  },
+]
+# 🔹 Create folder
+os.makedirs("images", exist_ok=True)
+
+metadata = []
+
+for item in data:
+    item_id = item["id"]
+    title = item["title"]
+    url = item["image"]
+
+    filename = f"images/{item_id}.png"
+    entry = {"id": item_id, "title": title, "filename": filename}
+
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        with open(filename, "wb") as f:
+            f.write(response.content)
+        print(f"✅ Saved {filename}")
+    except Exception as e:
+        print(f"❌ Failed {title}: {e}")
+        entry["filename"] = None
+
+    metadata.append(entry)
+
+# 🔹 Save metadata.json
+with open("metadata.json", "w", encoding="utf-8") as f:
+    json.dump(metadata, f, ensure_ascii=False, indent=2)
+
+print("📂 Done! metadata.json created.")
