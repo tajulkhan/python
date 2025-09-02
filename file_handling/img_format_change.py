@@ -2,7 +2,7 @@ import os
 from PIL import Image
 
 # Base folder where your gesorteerd folders are
-base_folder = r"D:\CityWebShops\wetransfer_b-b_2025-08-26_1901\B&B"
+base_folder = r"D:\ABC\Test\files"
 
 for root, dirs, files in os.walk(base_folder):
     for file in files:
@@ -30,3 +30,4 @@ for root, dirs, files in os.walk(base_folder):
 
             except Exception as e:
                 print(f"⚠️ Could not convert {file_path}: {e}")
+
