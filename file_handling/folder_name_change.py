@@ -1,7 +1,7 @@
 import os
 
 # Base folder where your "gesorteerd" folders are
-base_folder = r"D:\CityWebShops\wetransfer_b-b_2025-08-26_1901\B&B"
+base_folder = r"D:\ABC\Test\files"
 
 for root, dirs, files in os.walk(base_folder):
     for folder in dirs:
@@ -17,3 +17,4 @@ for root, dirs, files in os.walk(base_folder):
                     print(f"✅ Renamed: {old_path} -> {new_path}")
                 except Exception as e:
                     print(f"⚠️ Could not rename {old_path}: {e}")
+
